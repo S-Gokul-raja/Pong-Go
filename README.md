@@ -1,5 +1,4 @@
 # Pong Go
 ping pong game (player vs computer)
 
-![game screenshot 1](/git_images/1.jpg?raw=true)
-![game screenshot 2](/git_images/2.jpg)
+<img src="https://github.com/S-Gokul-raja/Pong-Go/blob/main/git_images/1.jpg" width="230">      <img src="https://github.com/S-Gokul-raja/Pong-Go/blob/main/git_images/2.jpg" width="230">

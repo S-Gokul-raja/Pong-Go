@@ -23,7 +23,7 @@ class _GamePageState extends State<GamePage> {
   Timer? timer;
   double brickWidth = Get.width * 0.2, brickHeight = 20, ballRadius = 10;
   Color ballColor = Colors.pink;
-  late int score, localHScore;
+  late int score;
   late HighScore highScore;
   late double leftBoundry, rightBoundry, topBoundry, bottomBoundry;
   late double midX, midY;
@@ -65,7 +65,6 @@ class _GamePageState extends State<GamePage> {
     speed = 2.5;
     horizontal = Direction.left;
     vertical = Direction.up;
-    localHScore = 0;
     score = 0;
     startTime = DateTime.now();
     super.initState();
@@ -91,7 +90,6 @@ class _GamePageState extends State<GamePage> {
       if (ballY + ballRadius >= bottomBoundry) {
         timer?.cancel();
         isGameOn = false;
-        localHScore = score;
         reset();
       }
 
@@ -114,12 +112,10 @@ class _GamePageState extends State<GamePage> {
               }
               vertical = Direction.up;
             } else {
-              if (score > localHScore) {
-                timer?.cancel();
-                isGameOn = false;
-                localHScore = score;
-                reset();
-              }
+              timer?.cancel();
+              isGameOn = false;
+
+              reset();
             }
           }
         }
@@ -133,10 +129,6 @@ class _GamePageState extends State<GamePage> {
     }
 
     setState(() {
-      if (score > highScore.score) {
-        localHScore = score;
-      }
-
       playerX = midX;
       playerY = bottomBoundry;
       ballX = midX;
@@ -231,48 +223,23 @@ class _GamePageState extends State<GamePage> {
             Positioned(
               top: bottomBoundry + 25,
               width: availableWidth,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: Column(
                 children: [
-                  Column(
-                    children: [
-                      const AutoSizeText(
-                        'HIGH SCORE',
-                        minFontSize: 12,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey),
-                      ),
-                      AutoSizeText(
-                        highScore.score.toString(),
-                        minFontSize: 12,
-                        style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.pink),
-                      ),
-                    ],
+                  const AutoSizeText(
+                    'HIGH SCORE',
+                    minFontSize: 12,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey),
                   ),
-                  Column(
-                    children: [
-                      const AutoSizeText(
-                        'CURRENT HIGH',
-                        minFontSize: 12,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey),
-                      ),
-                      AutoSizeText(
-                        localHScore.toString(),
-                        minFontSize: 12,
-                        style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.pink),
-                      ),
-                    ],
+                  AutoSizeText(
+                    highScore.score.toString(),
+                    minFontSize: 12,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.pink),
                   ),
                 ],
               ),
